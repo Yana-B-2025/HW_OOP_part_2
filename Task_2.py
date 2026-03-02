@@ -28,6 +28,7 @@ def get_cook_book():
     with open('recipes.txt', 'r', encoding='utf-8') as file:
         for line in file:
             dish_name = line.strip()
+            if not dish_name: continue
             ingredient_count = int(file.readline().strip())
             ingredients = []
             for _ in range(ingredient_count):
@@ -44,25 +45,26 @@ def get_cook_book():
             file.readline()
     return cook_book
 
-    print(cook_book)
+    # print(cook_book)
 
-def get_shop_list_by_dishes(dishes, person_count): 
+def get_shop_list_by_dishes(dishes, person_count, cook_book): 
     shop_list = {}  
-    cook_book = get_cook_book()
     for dish_ in dishes:   
-        for ingredients in cook_book[dish_]:
-            prod_name = ingredients['ingredient_name']
-            quantity = ingredients['quantity'] * person_count
-            if prod_name in shop_list:
-                shop_list[prod_name]['quantity'] += quantity
-            else:
-                shop_list[prod_name] = {
-                    'measure': ingredients['measure'],
-                    'quantity': quantity        
-                }         
+        if dish_ in cook_book:
+            for ingredients in cook_book[dish_]:
+                prod_name = ingredients['ingredient_name']
+                quantity = ingredients['quantity'] * person_count
+                if prod_name in shop_list:
+                    shop_list[prod_name]['quantity'] += quantity
+                else:
+                    shop_list[prod_name] = {
+                        'measure': ingredients['measure'],
+                        'quantity': quantity        
+                    }         
                     
-    return shop_list    
-pprint.pprint(get_shop_list_by_dishes(['Запеченный картофель', 'Омлет'], 2))
+    return shop_list 
+my_cook_book = get_cook_book()   
+pprint.pprint(get_shop_list_by_dishes(['Запеченный картофель', 'Омлет'], 2, my_cook_book))
 
 
                          

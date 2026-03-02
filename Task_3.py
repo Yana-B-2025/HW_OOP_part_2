@@ -12,33 +12,47 @@
 # на 2-х строках: имя файла и количество строк в нем
 
 
-with open('1.txt', 'r', encoding='utf-8') as f1:
-    file_1_lines = f1.readlines()
-    quantity_of_lines_1 = len(file_1_lines)
-    print(quantity_of_lines_1)
+# with open('1.txt', 'r', encoding='utf-8') as f1:
+#     file_1_lines = f1.readlines()
+#     quantity_of_lines_1 = len(file_1_lines)
+#     print(quantity_of_lines_1)
 
-with open('2.txt', 'r', encoding='utf-8') as f2:
-    file_2_lines = f2.readlines()
-    quantity_of_lines_2 = len(file_2_lines)
-    print(quantity_of_lines_2)
+# with open('2.txt', 'r', encoding='utf-8') as f2:
+#     file_2_lines = f2.readlines()
+#     quantity_of_lines_2 = len(file_2_lines)
+#     print(quantity_of_lines_2)
 
-with open('3.txt', 'r', encoding='utf-8') as f3:
-    file_3_lines = f3.readlines()
-    quantity_of_lines_3 = len(file_3_lines)
-    print(quantity_of_lines_3)
+# with open('3.txt', 'r', encoding='utf-8') as f3:
+#     file_3_lines = f3.readlines()
+#     quantity_of_lines_3 = len(file_3_lines)
+#     print(quantity_of_lines_3)
 
-# Записm в один файл
+# # Записm в один файл
+# with open('result.txt', 'w', encoding='utf-8') as res:
+#     res.write("2.txt\n")
+#     res.write(f"{quantity_of_lines_2}\n")
+#     res.writelines(file_2_lines)
+#     res.write("\n")
+#     res.write("1.txt\n")
+#     res.write(f"{quantity_of_lines_1}\n")
+#     res.writelines(file_1_lines) 
+#     res.write("\n")   
+#     res.write("3.txt\n")
+#     res.write(f"{quantity_of_lines_3}\n")
+#     res.writelines(file_3_lines)
+#     res.write("\n")
+
+file_names = ['1.txt', '2.txt', '3.txt']
+files_data = []
+for name in file_names:
+    with open(name, 'r', encoding='utf-8') as f:
+        lines = f.readlines()
+        files_data.append([len(lines), name, lines])
+        # print(files_data)
+sorted_files = sorted(files_data)
 with open('result.txt', 'w', encoding='utf-8') as res:
-    res.write("2.txt\n")
-    res.write(f"{quantity_of_lines_2}\n")
-    res.writelines(file_2_lines)
-    res.write("\n")
-    res.write("1.txt\n")
-    res.write(f"{quantity_of_lines_1}\n")
-    res.writelines(file_1_lines) 
-    res.write("\n")   
-    res.write("3.txt\n")
-    res.write(f"{quantity_of_lines_3}\n")
-    res.writelines(file_3_lines)
-    res.write("\n")
-
+    for quantity, name, text in sorted_files:
+        res.write(f"{name}\n")
+        res.write(f"{quantity}\n")
+        res.writelines(text)
+        res.write("\n")
